@@ -10,8 +10,8 @@ function Sidebar() {
           <a href="#" className="flex items-center p-2 bg-gray-700 rounded text-gray-300 hover:bg-gray-600">
             Dashboard
           </a>
-          <a href="#" className="flex items-center p-2 rounded text-gray-300 hover:bg-gray-600" >Home</a>
-          <a href="#" className="flex items-center p-2 rounded text-gray-300 hover:bg-gray-600" onClick={() => navigate('/admin/adcourse')}>Courses</a>
+          <a href="#" className="flex items-center p-2 rounded text-gray-300 hover:bg-gray-600" onClick={() => navigate('/')}>Home</a>
+          <a href="#" className="flex items-center p-2 rounded text-gray-300 hover:bg-gray-600" onClick={() => navigate('/courses')}>Courses</a>
           <a href="#" className="flex items-center p-2 rounded text-gray-300 hover:bg-gray-600">Blog</a>
         </nav>
       </div>
