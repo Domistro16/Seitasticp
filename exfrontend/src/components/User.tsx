@@ -82,7 +82,7 @@ export type User = {
         <Header />
         <div className="h-[180px] flex flex-col bg-red-700 w-full p-8 pt-10 items-center">
             <h1 className="text-4xl text-gray-100">{name}</h1>
-            <p className="text-gray-100 p-3">{walletAddress}</p>
+            <p className="text-gray-100 p-3 truncate max-w-full">{walletAddress}</p>
         </div>
         <Usercourses balance={b} />
         <Footer />

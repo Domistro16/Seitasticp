@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function HeroSection() {
+  const navigate = useNavigate()
   return (
     <div className="relative bg-transparent p-8">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center text-center md:text-left">
@@ -11,21 +14,20 @@ function HeroSection() {
             key to <span className="text-gray-700">success</span>
           </h1>
           <p className="text-gray-600 mt-4 text-lg md:w-3/4 mx-auto md:mx-0">
-            Moving forward, you will be paired with a highly vetted
-            professional who will get to know your goals and help you succeed.
+            Welcome to the Seitastic Course Page. Moving on you will be introduced to the basics of SEI and many more.
           </p>
           {/* Call-to-Actions */}
           <div className="mt-10 flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-5 justify-center md:justify-start">
-            <button className="px-8 py-4 bg-transparent text-gray-700 border rounded-full font-semibold shadow hover:bg-red-500 hover:text-white border-gray-700 transition ease-in-out">
+            <button className="px-8 py-4 bg-transparent text-gray-700 border rounded-full font-semibold shadow hover:bg-red-500 hover:text-white border-gray-700 transition ease-in-out" onClick={() => navigate('/courses')}>
               Learn More
             </button>
-            <button className="px-8 py-4 bg-red-500 text-white rounded-full shadow border hover:bg-white hover:text-red-500 border-red-500 transition ease-in-out">
-              Apply Now
+            <button className="px-8 py-4 bg-red-500 text-white rounded-full shadow border hover:bg-white hover:text-red-500 border-red-500 transition ease-in-out" onClick={() => navigate('/sign-up')}>
+              Sign-up Now
             </button>
           </div>
         </div>
         {/* Image Section */}
-        <div className="w-full md:w-1/2 mt-10 md:mt-0 hidden md:flex justify-center">
+        <div className="w-full md:w-1/2 md:mt-[-30px] hidden md:flex justify-center">
           <img src="s.png" alt="Student" className="w-full h-auto" />
         </div>
       </div>

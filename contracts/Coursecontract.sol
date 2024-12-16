@@ -3,8 +3,9 @@ pragma solidity ^0.8.27;
 
 import "./Admin.sol";
 import "./User.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract CourseContract {
+contract CourseContract is Initializable {
 
     struct Quiz {
         uint256 id;
@@ -43,11 +44,13 @@ contract CourseContract {
     event QuizAdded(uint256 indexed courseId, uint256 lessonId, uint256 quizId, string title);
     event LessonAdded(uint256 indexed courseId, uint256 lessonId, string title);
 
-
-    constructor(address _adminContract, address _userContract) {
-        adminContract = AdminContract(_adminContract);
-        userContract = UserContract(_userContract);
+    function initialize(address _adminContract, address _userContract) public initializer {
+         adminContract = AdminContract(_adminContract);
+         userContract = UserContract(_userContract);
     }
+
+/// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() initializer {}
 
     modifier onlyAdmin() {
         require(msg.sender == adminContract.admin(), "Only admin can perform this action");

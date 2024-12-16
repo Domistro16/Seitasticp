@@ -36,7 +36,7 @@ function Quiz() {
   const [initprog, setInitProg] = useState(0);
   const [prog, setProg] = useState(0);
   const [table, setTable] = useState<object[]>([]);
-  const [compL, setCompL] = useState([0])
+  const [compL, setCompL] = useState<BigInt[]>([])
   const [isTrue, setIstrue] = useState(false)
 
   const { data: course, error, isLoading } = useReadContract({
@@ -48,7 +48,6 @@ function Quiz() {
 
   useEffect(() => {
     if (error && !isLoading) {
-      console.error("Error loading course:", error);
       navigate("../");
       return;
     }
@@ -75,7 +74,6 @@ function Quiz() {
         setL(lesson);
         setCompL(completedLessons);
       } else {
-        console.error("Invalid lessons data:", lessons);
         navigate("../");
         return;
       }
@@ -90,20 +88,46 @@ function Quiz() {
           navigate(`/course/${id}`);
         }
       } else if (!L || typeof L === "undefined") {
-        console.error("L is null or undefined");
       }
     }
   }, [error, isLoading, course, navigate, id, lid, L]);
   
-  console.log("initial progress", initprog)
-  console.log("current progress", prog);
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>, item: string) => {
     event.dataTransfer.setData("text/plain", item);
   };
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>, item: string) => {
+    const target = event.target as HTMLElement
+    if(target){
+      target.dataset.draggedOption = item;
+    }
+  };
+
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    if (target && target.dataset.draggedOption) {
+      delete target.dataset.draggedOption; 
+    }
+  };
+
+  useEffect(() => {
+    const handleTouchMove = (event: TouchEvent) => {
+      event.preventDefault(); // Prevent scrolling during touch drag
+    };
+  
+    // Attach the event listener with passive set to false
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+  
+    // Clean up the event listener on component unmount
+    return () => {
+      document.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
   const item = event.dataTransfer.getData("text");
   event.preventDefault();
+
 
   if (answer === item) return; // Prevent duplicate drops
 
@@ -131,11 +155,24 @@ function Quiz() {
   };
 
   const {
-    error: rerror,
     isPending: isWriting,
     writeContract,
 } = useWriteContract();
 
+
+useEffect(() => {
+  // Convert `lid` to a number and ensure it's used consistently
+  if (lid) {
+    const lessonId = BigInt(lid);
+
+    // Check if the lesson is completed
+    if (compL && Array.isArray(compL) && compL.includes(lessonId)) {
+      setIstrue(true);
+    } else {
+      setIstrue(false);
+    }
+  }
+}, [compL, lid]);
 
 const handleConfirm = () => {
   const index = Quiz[currentQuestionIndex].correctAnswer;
@@ -143,86 +180,70 @@ const handleConfirm = () => {
 
   // Check if the dropped answer is correct
   if (answer === correctAnswerText) {
-      const increment = (100) / Quiz.length; // Score percentage per question
-      const updatedProgress = prog + increment // Ensure progress doesn't exceed 100%
-      setProg(updatedProgress);
+    const increment = 100 / Quiz.length; // Score percentage per question
+    const updatedProgress = Math.min(prog + increment, 100); // Ensure progress doesn't exceed 100%
+    setProg(updatedProgress);
 
-      const data: any = {
-        question: Quiz[currentQuestionIndex].questionText,
-        chosen: answer,
-        Answer: correctAnswerText,
-        score: increment
-      }
-
-      setTable((prev) => [...prev, data])
-
-      console.log("compl:", compL);
-      if (!compL.includes(Number(lid))){
-        console.log("True")
-        setIstrue(true);
-      }
-
-  }
-  else{
     const data: any = {
       question: Quiz[currentQuestionIndex].questionText,
       chosen: answer,
       Answer: correctAnswerText,
-      score: 0
+      score: increment,
+    };
+
+    setTable((prev) => [...prev, data]);
+
+    if(lid){
+    const lessonId = BigInt(lid); // Ensure consistent number comparison
+
+    if (compL && Array.isArray(compL) && compL.includes(lessonId)) {
+      setIstrue(true);
+    } else {
+      setIstrue(false);
     }
+  }
+} else {
+    const data: any = {
+      question: Quiz[currentQuestionIndex].questionText,
+      chosen: answer,
+      Answer: correctAnswerText,
+      score: 0,
+    };
 
-    setTable((prev) => [...prev, data])
-
+    setTable((prev) => [...prev, data]);
   }
   setIsConfirmed(true);
 };
 
+
 const handlefinal = () => {
-  // Determine if progress needs to be updated
-  console.log('final progress', prog)
+
   if (!isTrue) {
     const inc = (100 - 10) / length;
-
     const upd = initprog + inc;
 
-    if(!account.isDisconnected){
+    if (!account.isDisconnected) {
       try {
-          writeContract({
-              address: `0x${USER_ADDRESS}`,
-              abi: userabi,
-              functionName: "updateCourseProgress",
-              args: [Number(id), Number(lid), upd], // Use the updated progress
-          });
+        writeContract({
+          address: `0x${USER_ADDRESS}`,
+          abi: userabi,
+          functionName: "updateCourseProgress",
+          args: [Number(id), Number(lid), upd],
+        });
       } catch (error) {
-          console.error("Error updating progress:", error);
+      }
+    } else {
+      try {
+        updateProgress(Number(id || ""), prog);
+      } catch (error) {
       }
     }
-  
-    else if(account.isDisconnected){
-      try{
-        updateProgress(Number(id || ''), prog);
-      }
-      catch(error){
-
-      }
-    }
-  }
-   else {
-      console.log("Progress not updated as course already passed");
+  } else {
+    console.log("Progress not updated as course already passed.");
   }
 
   setIsSubmitted(true);
 };
-
-  
-
-  useEffect(() => {
-    if(rerror){
-      console.log(rerror)
-    }
-  }
-
-  )
 
   if(isLoading){
     return(
@@ -273,13 +294,26 @@ const handlefinal = () => {
           </div>
 
           {/* Options */}
-          <div className="flex flex-col md:flex-row gap-6 mx-auto justify-center p-10">
+          <div className="md:flex hidden md:flex-col md:flex-row gap-6 mx-auto justify-center p-10">
             {options.map((option, index) => (
               <div
                 key={index}
                 className="px-4 py-2 flex justify-center border border-1 border-gray-400 rounded-lg text-gray-100 cursor-pointer bg-gray-700"
                 draggable
                 onDragStart={(e) => handleDragStart(e, option)}
+                onTouchStart={(e) => handleTouchStart(e, option)}
+                onTouchEnd={handleTouchEnd}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+          <div className="flex md:hidden flex-col gap-6 mx-auto justify-center p-10">
+            {options.map((option, index) => (
+              <div
+                key={index}
+                className="px-4 py-2 flex justify-center border border-1 border-gray-400 rounded-lg text-gray-100 cursor-pointer bg-gray-700"
+                onClick={() => setAnswer(option)}
               >
                 {option}
               </div>

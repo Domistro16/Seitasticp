@@ -37,7 +37,6 @@ function Admin() {
   useEffect(() => {
     async function adnav() {
       if(admin){
-        console.log(admin)
           navigate('/admin');
 
       }
@@ -46,7 +45,7 @@ function Admin() {
     }
   }
     if (error && rerror && err) {
-      console.log(error, "and/n", rerror, err);
+      return;
     }
     adnav();
   }, [admin, error, rerror]);

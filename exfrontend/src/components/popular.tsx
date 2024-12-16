@@ -43,11 +43,8 @@ export const Popular = () => {
 
   useEffect(() => {
     if (index === null || isFetching || error) {
-      if (error) console.error("Error fetching course:", error);
       return;
     }
-
-    console.log("Fetched course:", course);
 
     if (!course || !Array.isArray(course) || course.length === 0) {
       // Stop fetching if no more courses are available
@@ -177,11 +174,9 @@ export const Usercourses: React.FC<uprps> = ({balance}) => {
   
     useEffect(() => {
       if (index === null || isFetching || error) {
-        if (error) console.error("Error fetching course:", error);
         return;
       }
-  
-      console.log("Fetched course:", course);
+
   
       if (!course || !Array.isArray(course) || course.length === 0) {
         // Stop fetching if no more courses are available

@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 import fs from "fs"
 import "dotenv/config"
 
@@ -7,7 +7,7 @@ const user = process.env.USER_ADDRESS || "";
  */
 async function main() {
     const Contract = await ethers.getContractFactory("AdminContract");
-    const contract = await Contract.deploy();
+    const contract = await upgrades.deployProxy(Contract, [], { initializer: 'initialize' });
     const adminaddress = await contract.getAddress();
 
 /* 
@@ -20,7 +20,7 @@ async function main() {
 
 
     const userContract = await ethers.getContractFactory("UserContract");
-    const usercontract = await userContract.deploy();
+    const usercontract = await upgrades.deployProxy(userContract, [], {});
     const useraddress = await usercontract.getAddress();
 
 /* 
@@ -33,7 +33,7 @@ async function main() {
 
 
     const courseContract = await ethers.getContractFactory("CourseContract");
-    const coursecontract = await courseContract.deploy(adminaddress, useraddress);
+    const coursecontract = await upgrades.deployProxy(courseContract, [adminaddress, useraddress], { initializer: 'initialize' });
     const courseaddress = await coursecontract.getAddress();
 
 

@@ -5,7 +5,6 @@ type ProgressBarProps = {
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
-    console.log("progress:", progress)
     return (
         <div className="w-full bg-white rounded-full h-4 overflow-hidden">
             <div

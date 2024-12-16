@@ -1,19 +1,18 @@
 const courseabi = [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_adminContract",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_userContract",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInitialization",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotInitializing",
+    "type": "error"
   },
   {
     "anonymous": false,
@@ -32,6 +31,19 @@ const courseabi = [
       }
     ],
     "name": "CourseAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "version",
+        "type": "uint64"
+      }
+    ],
+    "name": "Initialized",
     "type": "event"
   },
   {
@@ -393,6 +405,24 @@ const courseabi = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_adminContract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_userContract",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

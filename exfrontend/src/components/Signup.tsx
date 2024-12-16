@@ -16,7 +16,7 @@ function Signup() {
     try {
       await loginWithGoogle();
     } catch (error) {
-      console.error("Error during login or saving user:", error);
+      
     }
   }
 
@@ -25,7 +25,7 @@ function Signup() {
   const { 
     data: hash,
     isPending: isLoading,
-    writeContract , error
+    writeContract
   } = useWriteContract() 
 
   async function submit(e: any) { 
@@ -46,14 +46,9 @@ function Signup() {
   }
 useEffect(() => {
   if(hash){
-    console.log('Transaction successful:', hash);
     navigate('/user')
   }
-
-  if(error){
-    console.log('Error:', error)
-  }
-}, [hash, error])
+}, [hash])
 if (isLoading) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-opacity-4 bg-gray-900">

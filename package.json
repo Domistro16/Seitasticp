@@ -1,6 +1,8 @@
 {
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts-upgradeable": "^5.1.0",
+    "@openzeppelin/hardhat-upgrades": "^3.7.0",
     "hardhat": "^2.22.16",
     "nodemon": "^3.1.7"
   },
@@ -10,9 +12,7 @@
   "main": "index.js",
   "directories": {
     "test": "test"
-  
   },
- 
   "dependencies": {
     "abbrev": "^1.0.9",
     "acorn": "^8.14.0",

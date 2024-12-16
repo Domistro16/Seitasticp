@@ -42,7 +42,7 @@ function CreateCourse() {
   })
 }
 catch(error){
-  console.error(error)
+ 
 }
   }
   const img = getThumbnail(formData.url);
@@ -50,7 +50,7 @@ catch(error){
   useEffect(() => {
     async function adnav() {
       if(admin){
-        console.log(admin)
+ 
           navigate('/admin/adcourse');
 
       }
@@ -58,13 +58,6 @@ catch(error){
       return <div className="mx-auto my-auto">Are you the admin?</div>
     }
   }
-    if (rerror) {
-      console.log(rerror);
-    }
-
-    if(hash){
-      console.log(hash)
-    }
     adnav();
   }, [admin, rerror, hash]);
 
@@ -175,7 +168,7 @@ catch(error){
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-700"
         onChange={handleChange}
       >
-        <option value="" disabled>Select a course</option>
+        <option value="" disabled>Select a level</option>
         {levels.map((level, index) => (
           <option key={index} value={level}>
             {level}
@@ -191,7 +184,7 @@ catch(error){
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-700"
                 onChange={handleChange}
               >
-                <option value="" disabled>Select a course</option>
+                <option value="" disabled>Select an option</option>
                 {bools.map((bool, index) => (
                   <option key={index} value={bool}>
                     {bool}

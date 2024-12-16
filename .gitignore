@@ -3,6 +3,7 @@ node_modules
 exfrontend/node_modules
 exfrontend/dist
 exfrontend/.env
+.openzeppelin
 # Hardhat files
 /cache
 /artifacts

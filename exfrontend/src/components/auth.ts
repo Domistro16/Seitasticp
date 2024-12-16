@@ -20,9 +20,10 @@ export const addUser = async () => {
       '674ec8d3002f4e08b44c',
       id
     );
-    console.log('Document exists:', result);
+    if(result){
+      return result
+    }
   } catch (error: any) {
-    console.error('Error fetching document:', error);
 
     // Create the document if it doesn't exist
     if (error.code === 404) { // Assuming 404 is the "not found" error
@@ -33,9 +34,11 @@ export const addUser = async () => {
         user.$id,
         { name: user.name || 'Unknown User' }
       );
-      console.log('Document created:', result);
+
+      if(result){
+        return result
+      }
     } else {
-      console.error('Unhandled error:', error);
     }
   }
 };
@@ -60,9 +63,10 @@ export const newcourse = async () => {
     {'enrolled': enrolled}, // data (optional)
 );
 
-console.log(uresult);}
+if(uresult){
+  return uresult
+}}
 catch(error){
-  console.log(error);
 }
 }
 
@@ -99,9 +103,11 @@ export const updateProgress = async (courseId: any, progress: any) => {
       { courses, progress: progresses } // Data to update
     );
 
-    console.log('Updated document:', updatedResult);
+    if(updatedResult){
+      return updatedResult
+    }
   } catch (error) {
-    console.error('Error updating progress:', error);
+
   }
 };
 
@@ -119,23 +125,18 @@ export async function getProgress(courseId: any) {
 
     const progresses = Array.isArray(result.progress) ? [...result.progress] : [];
     const progress = progresses[courseId]
-    console.log(progress);
     return progress;
   }
     catch(error){
-      console.log(error)
     }
 }
 
 
 export const logoutUser = async () => {
     try {
-      const user = await account.get(); // Check if a user is logged in
-      console.log('User is logged in:', user);
+      await account.get();
       await account.deleteSession('current');
-      console.log('User logged out successfully');
     } catch (error) {
-      console.error('Logout failed:', error);
     }
   };
 export const getUser = async () => {

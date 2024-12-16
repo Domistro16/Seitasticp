@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract AdminContract {
+contract AdminContract is Initializable {
     address public admin;
 
-    constructor() {
-        admin = msg.sender; // The contract deployer is the admin
+
+    function initialize() public initializer {
+        admin = msg.sender;
     }
+
+   /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() initializer {}
 
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only the admin can perform this action");

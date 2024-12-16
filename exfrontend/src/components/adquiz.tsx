@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import courseAbi from "../../abi"
-import { useWriteContract, useReadContract } from "wagmi";
+import { useWriteContract} from "wagmi";
 import { COURSE_ADDRESS} from "../../course.json";
 import Header from "./Header";
 
@@ -40,14 +40,8 @@ function Createquiz(){
     }));
   };
 
-  const{data: counter} = useReadContract({
-    address: `0x${COURSE_ADDRESS}`,
-    abi: courseAbi,
-    functionName: 'numCourses',
-  })
 
-
-  const {data: hash, error: rerror, isPending: isLoading, writeContract} = useWriteContract();
+  const {isPending: isLoading, writeContract} = useWriteContract();
 
   async function submit(e: any){
     e.preventDefault();
@@ -67,21 +61,10 @@ function Createquiz(){
   })
 }
 catch(error){
-  console.error(error)
+
 }
   }
 
-  useEffect(() => {
-    if(hash){
-      console.log('hash:', hash)
-    }
-    if(counter){
-      console.log('counter:', counter)
-    }
-    if(rerror){
-      console.log('error:', rerror)
-    }
-  }, [hash, rerror])
   if(isLoading){
     return(
       <div className="fixed inset-0 flex items-center justify-center bg-opacity-25 bg-gray-900">

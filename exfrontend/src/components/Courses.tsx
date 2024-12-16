@@ -60,11 +60,8 @@ function Courses() {
 
   useEffect(() => {
     if (index === null || isFetching || error) {
-      if (error) console.error("Error fetching course:", error);
       return;
     }
-
-    console.log("Fetched course:", course);
 
     if (!course || !Array.isArray(course) || course.length === 0) {
       // Stop fetching if no more courses are available
@@ -349,9 +346,9 @@ const advancedScrollRef = useRef<HTMLDivElement>(null);
               </>
             )}
         </div>
-      <img
+        <img
         src={getThumbnail(obj.url)}
-        className="h-[150px] bg-red-500 w-full rounded-t-lg"
+        className="md:h-[150px] h-[75px] bg-red-500 w-full rounded-lg"
         alt="Thumbnail"
       />
     </div>
@@ -410,9 +407,9 @@ const advancedScrollRef = useRef<HTMLDivElement>(null);
               </>
             )}
         </div>
-      <img
+        <img
         src={getThumbnail(obj.url)}
-        className="h-[150px] bg-red-500 w-full rounded-t-lg"
+        className="md:h-[150px] h-[75px] bg-red-500 w-full rounded-lg"
         alt="Thumbnail"
       />
     </div>

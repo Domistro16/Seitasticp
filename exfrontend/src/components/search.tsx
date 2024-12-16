@@ -45,7 +45,7 @@ function SearchBar() {
 
   useEffect(() => {
     if (index === null || isFetching || error) {
-      if (error) console.error("Error fetching course:", error);
+      if (error)
       return;
     }
 
@@ -135,7 +135,7 @@ function SearchBar() {
                     alt="Thumbnail"
                   />
                   <div className="w-full">
-                    <p className="text-md font-medium">{obj.title}</p>
+                    <p className="text-md font-medium truncate max-w-[100px]">{obj.title}</p>
                     <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-2">
                       <p
                         className="text-sm text-blue-500 cursor-pointer"

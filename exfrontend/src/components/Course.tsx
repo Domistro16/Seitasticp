@@ -109,7 +109,6 @@ function Course() {
   // Navigate on error
   useEffect(() => {
     if (error && !isLoading) {
-      console.error("Error loading course:", error);
       navigate("../");
     }
   }, [error, isLoading, navigate]);
@@ -119,22 +118,17 @@ function Course() {
     if (hash) {
       setIsEnroll(true);
     }
-    if (rerror) {
-      console.error("Error during enrollment:", rerror);
-    }
 
     const get = async() => {
     if(account.isDisconnected){
       try{
       const guserprogress: number = await getProgress(id);
         if(guserprogress){
-          console.log('number', guserprogress);
           setProg(guserprogress);
           navigate(`/course/${id}`)
         }
   }
   catch(error){
-    console.log(error);
   }
 }
     }
@@ -155,7 +149,7 @@ function Course() {
         args: [id, address],
       });
     } catch (err) {
-      console.error("Enrollment error:", err);
+      console.error(err);
     }
   };
 
@@ -211,7 +205,6 @@ function Course() {
 
     const img = getThumbnail(curl);
     const {firstPart, secondPart} = splitByFirstLineBreak(description)
-    console.log("p:", p);
     return (
       <div className="h-full">
         <Header />
@@ -262,7 +255,7 @@ function Course() {
                 <button
                   onClick={enroll}
                   disabled={isWriting}
-                  className="w-full p-5 bg-red-600 hover:bg-red-800 text-white font-bold text-2xl rounded-lg shadow-md transition-transform transform hover:scale-105"
+                  className={`w-full p-5 bg-red-600 hover:bg-red-800 text-white font-bold text-2xl rounded-lg shadow-md ${isEnrolled ? "hidden" : "flex"} transition-transform transform hover:scale-105`}
                 >
                   {isWriting ? "Enrolling..." : "Enroll Now"}
                 </button>
@@ -270,10 +263,6 @@ function Course() {
                 <div>
                   <ProgressBar progress={p} />
                   <div className="flex gap-3 mt-4">
-                    <ActionButton
-                      text="Start Course"
-                      onClick={() => setIsCourse(!isCourse)}
-                    />
                   </div>
                 </div>
               )}
@@ -296,12 +285,6 @@ function Course() {
               ) : (
                 <div>
                   <ProgressBar progress={prog} />
-                  <div className="flex gap-3 mt-4">
-                    <ActionButton
-                      text="Take Course"
-                      onClick={() => setIsCourse(!isCourse)}
-                    />
-                  </div>
                 </div>
               )}
               <div className="bg-white p-5 mt-8 rounded-lg">
@@ -380,22 +363,6 @@ const InfoCard: React.FC<InfoCardProps> = ({ title, subtitle, imgSrc }) => {
   );
 };
 
-
-interface ActionButtonProps {
-  text: string;
-  onClick: () => void; // Function type
-}
-
-const ActionButton: React.FC<ActionButtonProps> = ({ text, onClick }) => {
-  return (
-    <button
-      className="p-3 bg-red-600 hover:bg-green-800 text-white font-bold text-xl rounded-lg shadow-md transition-transform transform hover:scale-105 w-full"
-      onClick={onClick}
-    >
-      {text}
-    </button>
-  );
-};
 
 
 interface CourseDetailProps {

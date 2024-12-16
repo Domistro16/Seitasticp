@@ -1,20 +1,18 @@
 import Header from "./Header";
 import HeroSection from "./HeroSection";
-import Categories from "./Categories";
 import Footer from "./Footer"
-import About from "./About";
 
 function Home() {
   return (
     <div className="">
-      <div className="h-full md:h-screen">
+      <div className="h-full">
       <Header />
       <HeroSection />
       </div>
-      <div className="">
+      {/* <div className="">
       <About />
       <Categories />
-      </div>
+      </div> */}
       <Footer />
     </div>
   );
