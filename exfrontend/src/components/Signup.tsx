@@ -10,6 +10,10 @@ function Signup() {
   const [isMigrate, setIsMigrate] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+
+    document.title = `Sign-up`
+}, [])
 
   
   async function handleLogin() {

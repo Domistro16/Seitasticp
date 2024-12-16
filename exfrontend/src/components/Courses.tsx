@@ -39,6 +39,10 @@ function Courses() {
     userProgress: any;
   };
 
+  useEffect(() => {
+
+      document.title = `Courses`
+  }, [])
   const [objects, setObjects] = useState<CourseObject[]>([]);
   const [searchQuery] = useState(""); // State for search query
   const [index, setIndex] = useState<number | null>(0); // Start fetching from index 0

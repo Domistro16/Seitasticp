@@ -9,6 +9,11 @@ import { useAccount, useReadContract } from 'wagmi'
 import courseabi from '../../abi'
 
 const Auth = () => {
+
+  useEffect(() => {
+
+    document.title = `Profile`
+}, [])
   const navigate = useNavigate();
     const { address } = useAccount();
     type CourseObject = {

@@ -32,6 +32,7 @@ export type User = {
 
     const user = data as [string, string, boolean, number];
 
+
     useEffect(() => {
 
       async function checkuser (){
@@ -70,6 +71,13 @@ export type User = {
   if (account.isDisconnected) {
     return <div>Please Create your account.</div>;
   }
+
+  useEffect(() => {
+    if(!isLoading && !error){
+
+      document.title = `Profile - ${user[0]}`
+    }
+  }, [isLoading, error])
 
   if (!isLoading && !error) {
 

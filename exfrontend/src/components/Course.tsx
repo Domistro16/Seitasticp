@@ -167,6 +167,7 @@ function Course() {
     if (course && Array.isArray(course)) {
       const [, , , , lessons] = course;
       setLesson(lessons);
+      document.title = course[1];
     }
     if(!isWriting){
       navigate(`/course/${id}`)

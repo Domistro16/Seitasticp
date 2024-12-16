@@ -1,7 +1,7 @@
 import Home from "./components/Landingpage";
 import Course from "./components/Course";
 import Admin from "./components/Admin"
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import CreateCourse from "./components/adcourse";
 import UserProfile from "./components/User"
 import Quiz from "./components/Quiz"
@@ -11,6 +11,7 @@ import Courses from "./components/Courses";
 import Createquiz from "./components/adquiz";
 import Lessons from "./components/addLessons";
 import List from "./components/Lessons";
+
 
 function App() {
   return (
@@ -32,3 +33,4 @@ function App() {
 }
 
 export default App;
+

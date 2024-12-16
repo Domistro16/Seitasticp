@@ -13,6 +13,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Admin() {
+
+  useEffect(() => {
+
+    document.title = `Welcome Seitastic`
+}, [])
   const navigate = useNavigate();
   const { data: admin, error } = useReadContract({
     address: `0x${ADMIN_ADDRESS}`,

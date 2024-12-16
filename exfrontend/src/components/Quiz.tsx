@@ -51,6 +51,10 @@ function Quiz() {
       navigate("../");
       return;
     }
+    useEffect(() => {
+
+      document.title = `Quiz`
+  }, [])
   
     if (!error && !isLoading && course && Array.isArray(course)) {
       const [

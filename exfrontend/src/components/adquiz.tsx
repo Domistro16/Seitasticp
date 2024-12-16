@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseAbi from "../../abi"
 import { useWriteContract} from "wagmi";
@@ -7,6 +7,10 @@ import Header from "./Header";
 
 
 function Createquiz(){
+  useEffect(() => {
+
+    document.title = `Add a Quiz`
+}, [])
   const { id, lid } = useParams<{id: string; lid: string}>();
   const [formData, setFormData] = useState({
     quizText: "",

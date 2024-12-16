@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseAbi from "../../abi"
 import { useWriteContract} from "wagmi";
@@ -6,6 +6,12 @@ import { COURSE_ADDRESS} from "../../course.json";
 import Header from "./Header";
 
 const Lessons = () => {
+
+  useEffect(() => {
+
+    document.title = `Add a Lesson`
+}, [])
+
     const { id } = useParams<{id: string}>();
     const [isInitial, setIsInitial] = useState(false);
     const [formData, setFormData] = useState({

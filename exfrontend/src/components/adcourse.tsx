@@ -8,6 +8,10 @@ import { COURSE_ADDRESS } from "../../course.json"
 import Header from "./Header"
 
 function CreateCourse() {
+  useEffect(() => {
+
+    document.title = `Add a Course`
+}, [])
   const [formData, setFormData] = useState({
     title: "",
     description: "",
