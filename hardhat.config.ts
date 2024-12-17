@@ -25,7 +25,6 @@ const config: HardhatUserConfig = {
   defaultNetwork: "seiTestnet",
  networks:{
   hardhat: {
-
   },
   seiTestnet: {
     url: `https://evm-rpc-testnet.sei-apis.com`,  // Replace with SEI testnet RPC

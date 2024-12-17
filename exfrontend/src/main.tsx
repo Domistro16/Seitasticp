@@ -7,19 +7,19 @@ import App from './App.js'
 import '@rainbow-me/rainbowkit/styles.css';
 import {getDefaultConfig, RainbowKitProvider,  darkTheme } from '@rainbow-me/rainbowkit';
 import { WagmiProvider, http } from 'wagmi';
-import {seiTestnet} from 'wagmi/chains';
+import {sei} from 'wagmi/chains';
 import './index.css'
 
 
 const PROJECT_ID = '1de61a4c87e4badcd97a7a2c903521fc';
 
 const config = getDefaultConfig({
-  appName: 'Seishorts',
+  appName: 'Seitastic',
   projectId: PROJECT_ID || '',
-  chains: [seiTestnet],
+  chains: [sei],
   transports: {
-    // [sei.id]: http('https://evm-rpc.sei-apis.com'),
-    [seiTestnet.id]: http('https://evm-rpc-testnet.sei-apis.com'),
+    [sei.id]: http('https://evm-rpc.sei-apis.com'),
+    // [seiTestnet.id]: http('https://evm-rpc-testnet.sei-apis.com'),
   },
   ssr: true, // If your dApp uses server side rendering (SSR)
 });

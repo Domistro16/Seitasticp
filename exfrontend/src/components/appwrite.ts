@@ -1,8 +1,9 @@
 import { Client, Account, Databases } from 'appwrite'
+const project = process.env.APROJECT_ID || ''
 
 const client = new Client()
   .setEndpoint('https://cloud.appwrite.io/v1')
-  .setProject('674cd159002870de2972')
+  .setProject(project)
 
   const account = new Account(client);
 

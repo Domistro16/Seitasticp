@@ -2,11 +2,14 @@
 import { account, databases} from './appwrite'
 import { OAuthProvider } from "appwrite"
 
+const did = process.env.DATABASE_ID || ''
+const cid = process.env.COLLECTION_ID || ''
+
 export const loginWithGoogle = async () => {
     await account.createOAuth2Session(
         OAuthProvider.Google,
         'http://localhost:5173/gsign',
-        'http://localhost:5173/fail'
+        'http://localhost:5173/'
     )
 }
 export const addUser = async () => {
@@ -16,8 +19,8 @@ export const addUser = async () => {
 
     // Attempt to fetch the document
     const result = await databases.getDocument(
-      '674ec7d40029fa311303',
-      '674ec8d3002f4e08b44c',
+      did,
+      cid,
       id
     );
     if(result){
@@ -29,8 +32,8 @@ export const addUser = async () => {
     if (error.code === 404) { // Assuming 404 is the "not found" error
       const user = await account.get(); // Re-fetch user for robustness
       const result = await databases.createDocument(
-        '674ec7d40029fa311303',
-        '674ec8d3002f4e08b44c',
+        did,
+        cid,
         user.$id,
         { name: user.name || 'Unknown User' }
       );
@@ -50,15 +53,15 @@ export const newcourse = async () => {
 
     // Attempt to fetch the document
     const result = await databases.getDocument(
-      '674ec7d40029fa311303',
-      '674ec8d3002f4e08b44c',
+      did,
+      cid,
       id
     );
 
     const enrolled = result.enrolled + 1;
   const uresult = await databases.updateDocument(
-    '674ec7d40029fa311303', // databaseId
-    '674ec8d3002f4e08b44c', // collectionId
+      did,
+      cid, // collectionId
     id, // documentId
     {'enrolled': enrolled}, // data (optional)
 );
@@ -78,8 +81,8 @@ export const updateProgress = async (courseId: any, progress: any) => {
 
     // Fetch the existing document
     const result = await databases.getDocument(
-      '674ec7d40029fa311303', // Database ID
-      '674ec8d3002f4e08b44c', // Collection ID
+      did,
+      cid,
       id // Document ID
     );
 
@@ -97,8 +100,8 @@ export const updateProgress = async (courseId: any, progress: any) => {
   
     // Update the document
     const updatedResult = await databases.updateDocument(
-      '674ec7d40029fa311303', // Database ID
-      '674ec8d3002f4e08b44c', // Collection ID
+      did,
+      cid,
       id, // Document ID
       { courses, progress: progresses } // Data to update
     );
@@ -118,8 +121,8 @@ export async function getProgress(courseId: any) {
 
     // Attempt to fetch the document
     const result = await databases.getDocument(
-      '674ec7d40029fa311303',
-      '674ec8d3002f4e08b44c',
+      did,
+      cid,
       id
     );
 
