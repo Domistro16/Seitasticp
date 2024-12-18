@@ -3,6 +3,9 @@ node_modules
 exfrontend/node_modules
 exfrontend/dist
 exfrontend/.env
+exfrontend/abi.ts
+exfrontend/adminabi.ts
+exfrontend/userabi.ts
 .openzeppelin
 # Hardhat files
 /cache

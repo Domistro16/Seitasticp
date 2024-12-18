@@ -1,17 +1,26 @@
 // src/auth.js
-import { account, databases} from './appwrite'
-import { OAuthProvider } from "appwrite"
+import { account, databases, OAuthProvider} from './appwrite'
 
-const did = process.env.DATABASE_ID || ''
-const cid = process.env.COLLECTION_ID || ''
+const did = import.meta.env.VITE_DATABASE_ID || ''
+const cid = import.meta.env.VITE_COLLECTION_ID || ''
+
+
 
 export const loginWithGoogle = async () => {
+  try {
+    console.log('DATABASE_ID:', did);
+    console.log('COLLECTION_ID:', cid);
+
     await account.createOAuth2Session(
-        OAuthProvider.Google,
-        'http://localhost:5173/gsign',
-        'http://localhost:5173/'
-    )
-}
+      OAuthProvider.Google,
+      'http://localhost:5173/gsign',
+      'http://localhost:5173/'
+    );
+
+  } catch (error) {
+    console.error('Login with Google failed:', error);
+  }
+};
 export const addUser = async () => {
   try {
     const user = await account.get();

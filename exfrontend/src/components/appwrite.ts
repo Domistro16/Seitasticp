@@ -1,5 +1,6 @@
-import { Client, Account, Databases } from 'appwrite'
-const project = process.env.APROJECT_ID || ''
+import { Client, Account, Databases, OAuthProvider } from 'appwrite'
+
+const project = import.meta.env.VITE_APROJECT_ID || ''
 
 const client = new Client()
   .setEndpoint('https://cloud.appwrite.io/v1')
@@ -8,5 +9,5 @@ const client = new Client()
   const account = new Account(client);
 
   const databases = new Databases(client);
-export { account, databases }
+export { account, databases, OAuthProvider }
 

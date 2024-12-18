@@ -11,11 +11,11 @@ import {sei} from 'wagmi/chains';
 import './index.css'
 
 
-const PROJECT_ID = '1de61a4c87e4badcd97a7a2c903521fc';
+const proj = import.meta.env.VITE_PROJECT_ID
 
 const config = getDefaultConfig({
   appName: 'Seitastic',
-  projectId: PROJECT_ID || '',
+  projectId: proj || '',
   chains: [sei],
   transports: {
     [sei.id]: http('https://evm-rpc.sei-apis.com'),

@@ -72,17 +72,14 @@ export type User = {
     return <div>Please Create your account.</div>;
   }
 
-  useEffect(() => {
-    if(!isLoading && !error){
+ 
+    
 
-      document.title = `Profile - ${user[0]}`
-    }
-  }, [isLoading, error])
-
-  if (!isLoading && !error) {
+  if (!isLoading && !error && user && Array.isArray(user)) {
 
     
     const [name, walletAddress, , balance] = user;
+    document.title = `Profile - ${user[0]}`
     const b = balance.toString();
 
   return (

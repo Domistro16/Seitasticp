@@ -1,3 +1,7 @@
+abi.ts
+userabi.ts
+adminabi.ts
+
 # Logs
 logs
 *.log

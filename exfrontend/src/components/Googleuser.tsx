@@ -1,6 +1,6 @@
 // src/Auth.js
 import { useState, useEffect } from 'react'
-import {  logoutUser,  addUser } from './auth'
+import {  logoutUser,  addUser} from './auth'
 import { useNavigate } from 'react-router-dom'
 import Header from './Header'
 import { COURSE_ADDRESS } from '../../course.json'
@@ -32,6 +32,9 @@ const Auth = () => {
     const [objects, setObjects] = useState<CourseObject[]>([]);
     const [index, setIndex] = useState<number | null>(0); // Start fetching from index 0
     const [fetching, setFetching] = useState(true);
+    const [name, setName] = useState('');
+    const [array, setArray] = useState([0])
+    const [enrolled, setEnrolled] = useState(0);
   
     const { data: course, error, isFetching} = useReadContract({
       address: `0x${COURSE_ADDRESS}`,
@@ -96,7 +99,13 @@ const Auth = () => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        addUser();
+       const result = await addUser();
+       if(result){
+        setName(result.name);
+        setArray(result.courses);
+        setEnrolled(result.enrolled);
+       }
+
       } catch (error) {
         navigate('/sign-up')
       }
@@ -111,10 +120,23 @@ const Auth = () => {
         <div className="h-full ">
         <Header />
         <div className="h-[180px] flex bg-red-700 w-full p-8 items-center">
-            <h1 className="text-4xl text-gray-100">Desmond Egwurube</h1>
+            <h1 className="text-4xl text-gray-100">{name}</h1>
         </div>
-        <div className=" mt-10 p-6 flex justify-center ">
-        <div className="p-6 bg-white rounded-lg shadow">
+        <div className=" mt-10 p-6 flex justify-center gap-5">
+        <div className="p-6 bg-white rounded-lg shadow max-h-500">
+        <h3 className="text-lg font-bold">Courses Enrolled: {enrolled.toString()}</h3> 
+        
+        <ul className="">
+        {objects.filter((a) => array.includes(a.id)).map((a, index) => (
+
+        <li key={index} className="text-gray-500 mt-5 list-style-number">
+            {a.title}
+         </li>   
+       
+        ))}
+        </ul>
+      </div>
+      <div className="p-6 bg-white rounded-lg shadow max-h-500">
         <h3 className="text-lg font-bold">Available Courses</h3>
         
         <ul className="">
